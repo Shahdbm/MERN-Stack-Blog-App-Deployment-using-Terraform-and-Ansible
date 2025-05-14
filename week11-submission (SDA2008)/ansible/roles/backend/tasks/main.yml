@@ -1,0 +1,17 @@
+- name: Clone blog repo
+  git:
+    repo: https://github.com/cw-barry/blog-app-MERN.git
+    dest: /home/ubuntu/blog-app
+
+- name: Create .env file
+  template:
+    src: env.j2
+    dest: /home/ubuntu/blog-app/backend/.env
+    mode: 0644
+
+- name: Install dependencies
+  shell: |
+    cd /home/ubuntu/blog-app/backend
+    npm install
+    pm2 start index.js --name "blog-backend"
+    pm2 save
